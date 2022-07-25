@@ -1,0 +1,47 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navbar {
+    color: aliceblue;
+    width: 800px;
+    height: 50px;
+    display: flex;
+    padding: 0 15px;
+    background: rgba(0, 128, 128, 0.6);
+}
+
+.navbar_item a {
+    margin-left: auto;
+    text-decoration: none;
+    color: aliceblue;
+    
+}
+
+.navbar_item a:hover {
+    color: black;
+    font-weight: bold;
+}
+
+.navbar button {
+    border: 1px solid teal;
+    background: aliceblue;
+    color: teal;
+    min-width: 70px;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.navbar button:hover {
+    color: aliceblue;
+    background: teal;
+}
