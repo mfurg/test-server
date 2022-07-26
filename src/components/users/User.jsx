@@ -29,7 +29,6 @@ const User = ({currentUser}) => {
                     <div>First Name: {user.first_name}</div>
                     <div>Last Name: {user.last_name}</div>
                     <div>User role: {user.role}</div>
-                    <div>All: {JSON.stringify(user)}</div>
             </div>
                 <div><button className='user_btns' onClick={() => setModal(true)}>Edit</button></div>
             </div>
