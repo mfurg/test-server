@@ -28,11 +28,11 @@ const FormUserEdit = ({user, setVisible, setUsers}) => {
             <form onSubmit={onSubmit}>
                 <div className="user-box">
                     <label>First name</label>
-                    <input onChange={onChange} value={user.first_name || ''} type="text" name="first_name" required/> 
+                    <input onChange={onChange} defaultValue={user.first_name} type="text" name="first_name" required/> 
                 </div>
                 <div className="user-box">
                     <label>Last name</label>
-                    <input onChange={onChange} value={user.last_name || ''} type="text" name="last_name" required/>
+                    <input onChange={onChange} defaultValue={user.last_name} type="text" name="last_name" required/>
                 </div>
                 <div className='login_buttons'>
                     <button className="mybutton">Submit</button>
