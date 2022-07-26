@@ -18,7 +18,7 @@ const FormUserAdd = ( {setVisible} ) => {
                 alert('new user added')
                 api.users.all()
                     .then(response => {
-                        dispatch({type: 'items', payload: {users: response.data}})
+                        dispatch({type: 'users', payload: {users: response.data}})
                     }).catch( error => console.log(error))
             })
     }
