@@ -10,7 +10,7 @@ const Admin = () => {
     const [users, setUsers] = useState([]);
     const [filteredResults, setFilteredResults] = useState([]);
     const [modal, setModal] = useState(false);
-    const [editId, setEditId] = useState('');
+    const [editedUser, setEditedUser] = useState('');
     const [action, setAction] = useState('');
 
     useEffect(() => {
@@ -49,7 +49,7 @@ const Admin = () => {
         <MyModal visible={modal} setVisible={setModal}>
             {action === 'add' 
                 ? <FormUserAdd setVisible={setModal} setUsers={setFilteredResults}/>
-                : <FormUserEdit setVisible={setModal} editId={editId} setUsers={setFilteredResults}/>}
+                : <FormUserEdit setVisible={setModal} user={editedUser} setUsers={setFilteredResults}/>}
         </MyModal>
         <button onClick={() => {
           setModal(true)
@@ -69,7 +69,7 @@ const Admin = () => {
                     </div>
                     <div>
                         <button className='user_btns'onClick={() => {
-                                setEditId(item.id)
+                                setEditedUser(item)
                                 setModal(true)
                             }}>Edit</button>
                         <button className='user_btns' onClick={() => deleteUser(item.id)}>Delete</button>

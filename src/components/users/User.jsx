@@ -21,7 +21,7 @@ const User = ({currentUser}) => {
         <div>
             <h1>User info</h1>
             <MyModal visible={modal} setVisible={setModal}> 
-                <FormUserEdit setUsers={refreshUser} setVisible={setModal} editId={user.id}/>
+                <FormUserEdit setUsers={refreshUser} setVisible={setModal} user={user}/>
             </MyModal>
             <div className='user'>
                 <div>
