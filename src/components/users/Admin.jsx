@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { CartState } from "../context/Context";
 import api from "../helper/api";
 
 import MyModal from "../helper/MyModal";
@@ -7,29 +6,27 @@ import FormUserEdit from "./FormUserEdit";
 import FormUserAdd from "./FormUsersAdd";
 
 const Admin = () => {
-    
-    const {state: {users}, dispatch} = CartState();
+
+    const [users, setUsers] = useState([]);
     const [filteredResults, setFilteredResults] = useState([]);
     const [modal, setModal] = useState(false);
     const [editId, setEditId] = useState('');
     const [action, setAction] = useState('');
-    // Get users from server, 
-    // modal true or false for visible of edit or add Forms
-    // action for conditional rendering Forms, can be 'add' or 'edit'
-    // get id for Edit Form
-    // using filteredResults (copy of items from state) only in this component for search
 
     useEffect(() => {
-        setFilteredResults(users);
-    },[users])
+        api.users.all()
+            .then((response) => {
+                setUsers(response.data)
+                setFilteredResults(response.data)})
+            .catch(error => console.log(error.message))
+    },[])
 
     const deleteUser = (id) => {
         api.users.delete(id)
         .then(() => {
+            alert('user id ' + id + ' deleted')
             api.users.all()
-                .then(response => {
-                    dispatch({type: 'users', payload: {users: response.data}})
-                    alert('user id ' + id + ' deleted')})
+                .then(response => setFilteredResults(response.data))
                 .catch( error => console.log(error))})
         .catch((error) => console.log(error.message))
     }
@@ -46,13 +43,13 @@ const Admin = () => {
             setFilteredResults(users)
         } 
       }
-console.log(filteredResults)
+      
     return (
         <div>
         <MyModal visible={modal} setVisible={setModal}>
             {action === 'add' 
-                ? <FormUserAdd setVisible={setModal}/>
-                : <FormUserEdit setVisible={setModal} editId={editId}/>}
+                ? <FormUserAdd setVisible={setModal} setUsers={setFilteredResults}/>
+                : <FormUserEdit setVisible={setModal} editId={editId} setUsers={setFilteredResults}/>}
         </MyModal>
         <button onClick={() => {
           setModal(true)

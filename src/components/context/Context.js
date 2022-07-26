@@ -7,31 +7,18 @@ const Cart = createContext();
 const Context = ({children}) => {
     // initialize items and user for conditional rendering
     // user.role: admin or user
-    const initState = {items: [], cart: [], isAuth: false, user: {}, users: []};
+    const initState = {cart: [], isAuth: false, user: {}};
     const [state, dispatch] = useReducer(cartReducer, initState)
-
-    //axios request to the server is async, so we cant initialize items and user through initState
-    const getItems = async () => {
-        const response = await api.items.all();
-        dispatch({type: 'items', payload: {items: response.data}})
-    }
 
     const getUser = async () => {
         const response = await api.auth.me();
         dispatch({type: 'user', payload: {user: response.data}})
     }
 
-    const getUsers = async () => {
-        const response = await api.users.all();
-        dispatch({type: 'users', payload: {users: response.data}})
-    }
-
     useEffect(() => {
         //only if user is log in now
         if(state.isAuth){
-            getItems();
             getUser();
-            getUsers();
         }
     }, [state.isAuth])
 

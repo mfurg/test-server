@@ -1,17 +1,9 @@
 
 export const cartReducer = (state, action) => {
     switch(action.type) {
-        case 'items': //get all items from axios response
-            const { items } = action.payload;
-            return {...state, items}
-
         case 'user': //get current user from axios response
             const { user } = action.payload;
             return {...state, user}
-
-        case 'users': //get current user from axios response
-            const { users } = action.payload;
-            return {...state, users}
 
         case 'add': //add item
             return {...state, cart: [...state.cart, {...action.payload, quantity: 1}]}

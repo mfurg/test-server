@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { CartState } from "../context/Context";
 import api from "../helper/api";
 
-const FormUserEdit = ({editId, setVisible}) => {
+const FormUserEdit = ({editId, setVisible, setUsers}) => {
 
     const [currentUser, setCurrentUser] = useState({});
-    const {dispatch} = CartState();
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -14,9 +12,7 @@ const FormUserEdit = ({editId, setVisible}) => {
                 setVisible(false)
                 alert('new item edited')
                 api.users.all()
-                    .then(response => {
-                        dispatch({type: 'users', payload: {users: response.data}})
-                    })
+                    .then(response => setUsers(response.data))
                     .catch( error => alert(error))
             })
     }

@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://gentle-plateau-38671.herokuapp.com/',
+  baseURL: 'http://localhost:3001/',
+  //baseURL: 'https://gentle-plateau-38671.herokuapp.com/',
 });
 
 instance.interceptors.request.use((c) => {
@@ -16,7 +17,7 @@ const api = {
     register: (data) => instance.post('users', data),
   },
   items: {
-    all: () => instance.get('api/items'),
+    all: (search) => instance.get(`api/items?search=${search}`),
     add: (data) => instance.post('api/items', data),
     edit: (data,id) => instance.put('/api/items/' + id, data),
     delete: (id) => instance.delete('api/items/' + id),

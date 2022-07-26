@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {CartState} from '../context/Context';
 import api from '../helper/api';
 
@@ -9,43 +9,32 @@ import FormEditItem from './FormEditItem';
 
 const Items = ( ) => { 
   
-  const {state: {user, items}} = CartState();
+  const {state: {user}} = CartState();
+  const [items, setItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [modal, setModal] = useState(false);
   const [action, setAction] = useState('edit');
   const [editId, setEditId] = useState(0);
-  const [filteredResults, setFilteredResults] = useState([]);
-  // Get items from context state for the first time, 
-  // modal true or false for visible of edit or add Forms
-  // action for conditional rendering Forms, can be 'add' or 'edit'
-  // get id from component Item for Edit Form
-  // using filteredResults (copy of items from state) only in this component for search
 
   useEffect(() => {
-    setFilteredResults(items);
-  },[items])
+    getItems();
+  },[searchQuery])
   
+  const getItems = useCallback(() => {
+    api.items.all(searchQuery)
+      .then(response => setItems(response.data))
+      .catch(error => console.log(error))
+  },[searchQuery])
+
   const deleteItem = (id) => {
     api.items.delete(id)
       .then(() => {
         api.items.all().then(response => {
           // refreshing our items after delete
-          setFilteredResults(response.data)
+          setItems(response.data)
           alert('item ' + id + ' deleted')
         }).catch( error => console.log(error))})
       .catch((error) => console.log(error.message))
-  }
-
-  const searchItems = (e) => {
-    const {value} = e.target;
-    // is search query non empty?
-    if(value) {
-        const filteredData = items.filter((item) => {
-            return Object.values(item).join('').toLowerCase().includes(value.toLowerCase())
-        })
-        setFilteredResults(filteredData)
-    } else {
-        setFilteredResults(items)
-    } 
   }
 
   const edit = (id) => {
@@ -61,15 +50,15 @@ const Items = ( ) => {
           setModal(true)
           setAction('add')
         }}>Add item</button>}
-        <input icon='search' placeholder='Search...' onChange={searchItems}/>
+        <input icon='search' placeholder='Search...' onChange={(e) => setSearchQuery(e.target.value)}/>
 
         <MyModal visible={modal} setVisible={setModal}>
           {action === 'edit' 
-              ? <FormEditItem setVisible={setModal} editId={editId}/> 
-              : <FormAddItem setVisible={setModal}/> }
+              ? <FormEditItem setVisible={setModal} editId={editId} setItems={setItems}/> 
+              : <FormAddItem setVisible={setModal} setItems={setItems}/> }
         </MyModal>
 
-      {filteredResults.map(item => (
+      {items.map(item => (
         <Item item={item} role={user.role} edit={edit} deleteItem={deleteItem} key={item.id}/>
       ))}
     </div>)

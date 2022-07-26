@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import api from '../helper/api';
-import { CartState } from '../context/Context';
 
 import '../stylesheets/FormLogin.css';
 
-const FormEditItem = ({setVisible, editId}) => {
+const FormEditItem = ({setVisible, editId, setItems}) => {
 
     const [currentItem, setCurrentItem] = useState({});
-    const {dispatch} = CartState();
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -15,12 +13,10 @@ const FormEditItem = ({setVisible, editId}) => {
             .then(() => {
                 setVisible(false)
                 alert('new item edited')
-                api.items.all().then(response => {
-                    dispatch({type: 'items', payload: {items: response.data}})
-                  }).catch( error => console.log(error))
+                api.items.all()
+                    .then(response => setItems(response.data))
+                    .catch( error => console.log(error))
             })
-        
-
     }
 
     const onChange = (event) => {

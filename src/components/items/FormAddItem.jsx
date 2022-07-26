@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import api from '../helper/api';
-import { CartState } from '../context/Context';
 
 import '../stylesheets/FormLogin.css';
 
 
-const FormAddItem = ( {setVisible} ) => {
+const FormAddItem = ( {setVisible, setItems} ) => {
 
-    const {dispatch} = CartState();
     const [currentItem, setCurrentItem] = useState({});
 
     const onSubmit = (event) => {
@@ -16,9 +14,9 @@ const FormAddItem = ( {setVisible} ) => {
             .then(() => {
                 setVisible(false)
                 alert('new item added')
-                api.items.all().then(response => {
-                    dispatch({type: 'items', payload: {items: response.data}})
-                  }).catch( error => console.log(error))
+                api.items.all()
+                    .then(response => setItems(response.data))
+                    .catch( error => console.log(error))
             })
         
 

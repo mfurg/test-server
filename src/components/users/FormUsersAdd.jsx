@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
-import { CartState } from '../context/Context';
 import api from '../helper/api';
 
 import '../stylesheets/FormLogin.css';
 
 
-const FormUserAdd = ( {setVisible} ) => {
+const FormUserAdd = ( {setVisible, setUsers} ) => {
 
     const [currentUser, setCurrentUser] = useState({role: 'user'});
-    const {dispatch} = CartState();
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -17,9 +15,8 @@ const FormUserAdd = ( {setVisible} ) => {
                 setVisible(false)
                 alert('new user added')
                 api.users.all()
-                    .then(response => {
-                        dispatch({type: 'users', payload: {users: response.data}})
-                    }).catch( error => console.log(error))
+                    .then(response => setUsers(response.data))
+                    .catch( error => console.log(error))
             })
     }
 
