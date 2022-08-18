@@ -18,7 +18,7 @@ const AppRouter = () => {
          isAuth ? <Switch> 
                     <Route component={Items} path='/items'/>
                     <Route component={Users} path='/user'/>
-                    {user.role === 'user' && <> <Route component={Cart} path='/cart'/>
+                    {user.roles[0] === 'user' && <> <Route component={Cart} path='/cart'/>
                     <Route component={Order} path='/orders'/></>}
                     <Route component={Items} path='/'/>
                     <Redirect to='/'/>

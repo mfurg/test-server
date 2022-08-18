@@ -10,7 +10,7 @@ const FormUserEdit = ({user, setVisible, setUsers}) => {
         api.users.edit(currentUser, user.id)
             .then(() => {
                 setVisible(false)
-                alert('new item edited')
+                alert('user edited')
                 api.users.all()
                     .then(response => setUsers(response.data))
                     .catch( error => alert(error))

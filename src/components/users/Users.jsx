@@ -9,7 +9,7 @@ const Users = () => {
 
     const {state: {user}} = CartState();
 
-    return user.role === 'user' 
+    return user.roles[0] === 'user' 
         ? <User currentUser={user}/> 
         : <Admin />
 }

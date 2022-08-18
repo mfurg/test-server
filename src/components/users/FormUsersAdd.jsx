@@ -6,7 +6,7 @@ import '../stylesheets/FormLogin.css';
 
 const FormUserAdd = ( {setVisible, setUsers} ) => {
 
-    const [currentUser, setCurrentUser] = useState({role: 'user'});
+    const [currentUser, setCurrentUser] = useState({"roles": ["user"]});
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -30,8 +30,12 @@ const FormUserAdd = ( {setVisible, setUsers} ) => {
             <h2>Add user</h2>
             <form onSubmit={onSubmit}>
                 <div className="user-box">
-                    <label>Login</label>
+                    <label>Email</label>
                     <input onChange={onChange} type="text" name="email" required/> 
+                </div>
+                <div className="user-box">
+                    <label>Username</label>
+                    <input onChange={onChange} type="text" name="username" required/> 
                 </div>
                 <div className="user-box">
                     <label>Password</label>

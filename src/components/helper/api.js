@@ -1,12 +1,13 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  //baseURL: 'http://localhost:3001/',
-  baseURL: 'https://gentle-plateau-38671.herokuapp.com/',
+  baseURL: 'http://localhost:8080/',
+  //baseURL: 'https://gentle-plateau-38671.herokuapp.com/',
 });
 
 instance.interceptors.request.use((c) => {
   c.headers.Authorization = localStorage.getItem('token');
+  c.headers['x-access-token'] = localStorage.getItem('token');
   return c;
 });
 

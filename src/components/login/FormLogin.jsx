@@ -18,13 +18,13 @@ const FormLogin = ( ) => {
     const onSubmit = (event) => {
         event.preventDefault();
 
-        api.auth.login({"user": { 
-                        "email": login, 
-                        "password": password}})
-                .then(res => {
-                    localStorage.setItem("token", res.headers.authorization);
+        api.auth.login({ "username": login, "password": password})
+                .then(response => {
+                    localStorage.setItem("token", response.data.accessToken);
+                    dispatch({type: 'user', payload: {user: response.data}})
                     dispatch({type: 'login'})
-                    history.push('/items')})
+                    history.push('/items')
+                    console.log(response)})
                 .catch( error => {
                     alert(error.message)
                 })

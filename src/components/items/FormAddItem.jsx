@@ -14,7 +14,7 @@ const FormAddItem = ( {setVisible, setItems} ) => {
             .then(() => {
                 setVisible(false)
                 alert('new item added')
-                api.items.all()
+                api.items.all('')
                     .then(response => setItems(response.data))
                     .catch( error => console.log(error))
             })

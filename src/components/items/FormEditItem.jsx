@@ -13,7 +13,7 @@ const FormEditItem = ({setVisible, editId, setItems}) => {
             .then(() => {
                 setVisible(false)
                 alert('new item edited')
-                api.items.all()
+                api.items.all('')
                     .then(response => setItems(response.data))
                     .catch( error => console.log(error))
             })

@@ -15,6 +15,7 @@ const Items = ( ) => {
   const [modal, setModal] = useState(false);
   const [action, setAction] = useState('edit');
   const [editId, setEditId] = useState(0);
+  const role = user.roles[0]
 
   useEffect(() => {
     getItems();
@@ -29,7 +30,7 @@ const Items = ( ) => {
   const deleteItem = (id) => {
     api.items.delete(id)
       .then(() => {
-        api.items.all().then(response => {
+        api.items.all('').then(response => {
           // refreshing our items after delete
           setItems(response.data)
           alert('item ' + id + ' deleted')
@@ -46,7 +47,7 @@ const Items = ( ) => {
   return (
     <div>
       <h1>Items</h1>
-      {user.role === 'admin' && <button onClick={() => {
+      {role === 'admin' && <button onClick={() => {
           setModal(true)
           setAction('add')
         }}>Add item</button>}
@@ -59,7 +60,7 @@ const Items = ( ) => {
         </MyModal>
 
       {items.map(item => (
-        <Item item={item} role={user.role} edit={edit} deleteItem={deleteItem} key={item.id}/>
+        <Item item={item} role={role} edit={edit} deleteItem={deleteItem} key={item.id}/>
       ))}
     </div>)
 }

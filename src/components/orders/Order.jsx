@@ -18,10 +18,10 @@ const Order = () => {
         orders.map((item) => (
             <div className="order" key={item.id}>
                 <div className='order_content'>
-                    <strong>Order {item.id} created at {item.created_at}</strong>
+                    <strong>Order {item.id} created at {item.createdAt}</strong>
                     <div>
                     {item.orders_descriptions.map(d => (
-                            <div className='order_content' key={d.created_at}>
+                            <div className='order_content' key={d.item?.updatedAt}>
                                 <hr />
                                 <div>Item name: {d.item?.name || '-'}</div>
                                 <div>Item description: {d.item?.description || '-'}</div>

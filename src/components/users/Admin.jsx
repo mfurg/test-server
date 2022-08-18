@@ -17,7 +17,8 @@ const Admin = () => {
         api.users.all()
             .then((response) => {
                 setUsers(response.data)
-                setFilteredResults(response.data)})
+                setFilteredResults(response.data)
+            })
             .catch(error => console.log(error.message))
     },[])
 
@@ -61,10 +62,11 @@ const Admin = () => {
             <div key={item.id}>
                 <div className='user'>
                     <div>
-                        <strong>Login: { item.email }</strong>
+                        <strong>Login: { item.username }</strong>
+                        <div>email: {item.email}</div>
                         <div>First Name: {item.first_name}</div>
                         <div>Last Name: {item.last_name}</div>
-                        <div>User role: {item.role}</div>
+                        <div>User role: {item.roles.map((role) => role.name + ' ')}</div>
                         <div>id: {item.id}</div>
                     </div>
                     <div>
